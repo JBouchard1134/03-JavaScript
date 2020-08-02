@@ -1,5 +1,7 @@
 // Assignment Code
-var generateBtn = document.querySelector("#generate");
+const generateBtn = document.querySelector("#generate");
+const clearBtn = document.querySelector("#clear");
+let passwordText = document.querySelector("#password");
 
 // Global
 var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
@@ -8,6 +10,10 @@ var symbolArr = ['!','@', '#', '$', '%', '^', '&', '*', '(', ')'];
 var generatedPassword = [];
 let randomFunc = [];
 
+// Clear password from field.
+function eraseText() {
+  passwordText.value = '';
+}
 
 // Generate lowercase letter
 function getRandomLower () {
@@ -39,41 +45,48 @@ function writePassword() {
   var passwordNumbers = prompt('Would you like to include numbers? yes or no').toLocaleLowerCase();
   var passwordSymbols = prompt('Would you like to include special characters? yes or no').toLocaleLowerCase();
 
-  if (passwordLength >= 8 && passwordLength <= 128 && passwordLength) {
+    // Checks if user input is a number between 8 and 128
+    if (passwordLength >= 8 && passwordLength <= 128 && passwordLength !== NaN) {
 
-    if (passwordLowercase === 'yes') {
-      randomFunc.push(getRandomLower);
-      passwordLowercase = false;
-    } 
-    
-    if (passwordUppercase === 'yes') {
-      randomFunc.push(getRandomUpper);
-      passwordUppercase = false;
-    } 
-    
-    if (passwordNumbers === 'yes') {
-      randomFunc.push(getRandomNumber);
-      passwordNumbers = false;
-    } 
-    
-    if (passwordSymbols === 'yes') {
-      randomFunc.push(getRandomSymbol);
-      passwordSymbols = false;
-    }
-    
-    for (var i = 0; i < parseInt(passwordLength); i++) {
-      let randomChar = randomFunc[Math.floor(Math.random() * randomFunc.length)]();
-      generatedPassword.push(randomChar);
+      // Based on user criteria, pushes function into randomFunc Array
+      if (passwordLowercase === 'yes') {
+        randomFunc.push(getRandomLower);
+        passwordLowercase = false;
+      } 
+      
+      if (passwordUppercase === 'yes') {
+        randomFunc.push(getRandomUpper);
+        passwordUppercase = false;
+      } 
+      
+      if (passwordNumbers === 'yes') {
+        randomFunc.push(getRandomNumber);
+        passwordNumbers = false;
+      } 
+      
+      if (passwordSymbols === 'yes') {
+        randomFunc.push(getRandomSymbol);
+        passwordSymbols = false;
+      }
+      
+      // Loop and push generated character to generatedPassword array.
+      for (var i = 0; i < parseInt(passwordLength); i++) {
+        let randomChar = randomFunc[Math.floor(Math.random() * randomFunc.length)]();
+        generatedPassword.push(randomChar);
+      }
+        passwordText.value = generatedPassword.join('');
 
+    } else {
+      alert('Please enter a number between 8 and 128');
+      writePassword();
     }
-      var passwordText = document.querySelector("#password");
-      passwordText.value = generatedPassword.join('');
-  }
-}
+  } 
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
+clearBtn.addEventListener("click", eraseText);
 
+//Console Logs
 console.log(getRandomSymbol());
 console.log(getRandomNumber());
 console.log(getRandomLower());
