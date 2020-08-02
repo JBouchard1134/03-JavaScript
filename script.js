@@ -1,19 +1,13 @@
 // Assignment Code
 const generateBtn = document.querySelector("#generate");
-const clearBtn = document.querySelector("#clear");
-let passwordText = document.querySelector("#password");
+const passwordText = document.querySelector("#password");
 
 // Global
-var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+const alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
 "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-var symbolArr = ['!','@', '#', '$', '%', '^', '&', '*', '(', ')'];
-var generatedPassword = [];
+const symbolArr = ['!','@', '#', '$', '%', '^', '&', '*', '(', ')'];
+let generatedPassword = [];
 let randomFunc = [];
-
-// Clear password from field.
-function eraseText() {
-  passwordText.value = '';
-}
 
 // Generate lowercase letter
 function getRandomLower () {
@@ -38,12 +32,16 @@ function getRandomSymbol () {
 // Write password to the #password input
 function writePassword() {
 
+  // Clear any existing password & character generating functions
+  generatedPassword.length = 0;
+  randomFunc.length = 0;
+
   // Prompt for password criteria
-  var passwordLength = prompt('Enter your password length. Must be between 8 & 128 characters.');
-  var passwordLowercase = prompt('Would you like to include lowercase letters? yes or no').toLocaleLowerCase();
-  var passwordUppercase = prompt('Would you like to include uppercase letters? yes or no').toLocaleLowerCase();
-  var passwordNumbers = prompt('Would you like to include numbers? yes or no').toLocaleLowerCase();
-  var passwordSymbols = prompt('Would you like to include special characters? yes or no').toLocaleLowerCase();
+  let passwordLength = prompt('Enter your password length. Must be between 8 & 128 characters.');
+  let passwordLowercase = prompt('Would you like to include lowercase letters? yes or no').toLocaleLowerCase();
+  let passwordUppercase = prompt('Would you like to include uppercase letters? yes or no').toLocaleLowerCase();
+  let passwordNumbers = prompt('Would you like to include numbers? yes or no').toLocaleLowerCase();
+  let passwordSymbols = prompt('Would you like to include special characters? yes or no').toLocaleLowerCase();
 
     // Checks if user input is a number between 8 and 128
     if (passwordLength >= 8 && passwordLength <= 128 && passwordLength !== NaN) {
@@ -84,7 +82,6 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-clearBtn.addEventListener("click", eraseText);
 
 //Console Logs
 console.log(getRandomSymbol());
